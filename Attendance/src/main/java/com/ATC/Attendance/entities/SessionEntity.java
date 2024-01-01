@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class SessionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) 
-    private int Id;
+    private Long Id;
     @Column(nullable = false, unique = true)
     private LocalDateTime timeStart;
     @Column(nullable = false, unique = true)
