@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActiveSessionRes {
-    private Long status;
-    private String message;
+public class TeachingReq {
+    private String teacherCode;
 }

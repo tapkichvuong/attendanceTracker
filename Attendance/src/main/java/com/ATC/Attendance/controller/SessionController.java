@@ -1,13 +1,16 @@
 package com.ATC.Attendance.controller;
 
-import com.ATC.Attendance.dto.RegisterRequest;
-import com.ATC.Attendance.dto.RegisterResponse;
-import com.ATC.Attendance.dto.SessionRequest;
-import com.ATC.Attendance.dto.SessionResponse;
+import com.ATC.Attendance.dto.ActiveSessionReq;
+import com.ATC.Attendance.dto.ActiveSessionRes;
+import com.ATC.Attendance.dto.TeachingReq;
+import com.ATC.Attendance.dto.TeachingRes;
+import com.ATC.Attendance.entities.SessionEntity;
 import com.ATC.Attendance.service.SessionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/session")
@@ -19,7 +22,12 @@ public class SessionController {
     }
 
     @PostMapping(path = "/activate")
-    public ResponseEntity<SessionResponse> activeSession(@RequestHeader("Authorization") String jwtToken, @RequestBody SessionRequest sessionRequest){
+    public ResponseEntity<ActiveSessionRes> activeSession(@RequestHeader("Authorization") String jwtToken, @RequestBody ActiveSessionReq sessionRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(jwtToken, sessionRequest));
+    }
+
+    @PostMapping(path = "/teaching")
+    public List<TeachingRes> getSessionByTeacher(@RequestHeader("Authorization") String jwtToken, @RequestBody TeachingReq teaching){
+        return sessionService.findSessionsByTeacher(jwtToken, teaching);
     }
 }
