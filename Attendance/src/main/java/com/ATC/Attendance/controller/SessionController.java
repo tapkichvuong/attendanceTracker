@@ -26,8 +26,8 @@ public class SessionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(jwtToken, sessionRequest));
     }
 
-    @PostMapping(path = "/teaching")
-    public List<TeachingRes> getSessionByTeacher(@RequestHeader("Authorization") String jwtToken, @RequestBody TeachingReq teaching){
-        return sessionService.findSessionsByTeacher(jwtToken, teaching);
+    @GetMapping(path = "/teaching")
+    public ResponseEntity<List<TeachingRes>> getSessionByTeacher(@RequestHeader("Authorization") String jwtToken, @RequestBody TeachingReq teaching){
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher(jwtToken, teaching));
     }
 }
