@@ -18,7 +18,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="Session", uniqueConstraints = @UniqueConstraint(columnNames = {"timeStart", "timeEnd"}))
+@Table(name="Session")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +27,11 @@ public class SessionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) 
     private Long Id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDateTime timeStart;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDateTime timeEnd;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private boolean isActive;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
