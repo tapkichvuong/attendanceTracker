@@ -20,8 +20,8 @@ public class StudentController {
     }
     @GetMapping(path = "/sessions")
     public ResponseEntity<List<SessionResponse>> getSessions(){
-        List<SessionResponse> response = this.studentService.getSessions();
+        // TODO: lấy student code từ request thay vì hardcode.
+        List<SessionResponse> response = this.studentService.getSessions("1");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 }
