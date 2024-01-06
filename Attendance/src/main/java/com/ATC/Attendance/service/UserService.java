@@ -8,7 +8,7 @@ import com.ATC.Attendance.dto.RegisterRequest;
 import com.ATC.Attendance.dto.RegisterResponse;
 import com.ATC.Attendance.entities.UserEntity;
 import com.ATC.Attendance.exception.AppException;
-import com.ATC.Attendance.respository.UserRespository;
+import com.ATC.Attendance.repository.UserRespository;
 import com.ATC.Attendance.utils.JwtUtil;
 
 import de.mkammerer.argon2.Argon2;

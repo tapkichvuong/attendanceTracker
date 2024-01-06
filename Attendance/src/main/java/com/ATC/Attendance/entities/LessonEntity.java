@@ -25,6 +25,7 @@ public class LessonEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private Long Id;
+
     @Column(nullable = false, unique = true)
     private String lessonName;
     @ManyToOne(cascade = CascadeType.ALL)

@@ -5,8 +5,8 @@ import com.ATC.Attendance.entities.LessonEntity;
 import com.ATC.Attendance.entities.SessionEntity;
 import com.ATC.Attendance.entities.StudentEntity;
 import com.ATC.Attendance.entities.SubjectEntity;
-import com.ATC.Attendance.respository.SessionRepository;
-import com.ATC.Attendance.respository.StudentRepository;
+import com.ATC.Attendance.repository.SessionRepository;
+import com.ATC.Attendance.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

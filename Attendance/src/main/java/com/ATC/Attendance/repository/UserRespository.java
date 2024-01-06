@@ -1,4 +1,4 @@
-package com.ATC.Attendance.respository;
+package com.ATC.Attendance.repository;
 
 import com.ATC.Attendance.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
