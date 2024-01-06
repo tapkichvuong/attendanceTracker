@@ -1,15 +1,14 @@
 package com.ATC.Attendance.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LoginResponse {
-    private String token;
-    private Boolean role;
+public class AuthenticationRequest {
+    private String userCode;
+    String password;
 }

@@ -1,5 +1,6 @@
 package com.ATC.Attendance.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class RegisterRequest {
     private String userCode;
     private String password;
-    private String passwordConfirm;
-    private boolean role;
+    private String role;
 }
 
