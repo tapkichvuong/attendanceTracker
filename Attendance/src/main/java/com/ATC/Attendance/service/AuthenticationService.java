@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.ATC.Attendance.dto.AuthenticationRequest;
 import com.ATC.Attendance.dto.AuthenticationResponse;
 import com.ATC.Attendance.dto.RegisterRequest;
-import com.ATC.Attendance.entities.Role;
 import com.ATC.Attendance.entities.UserEntity;
 import com.ATC.Attendance.repository.UserRepository;
 
@@ -33,9 +32,9 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
-
+    
     public AuthenticationResponse register(RegisterRequest request){
-        var user = UserEntity.builder().userCode(request.getUserCode()).userPassword(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
+        var user = UserEntity.builder().userCode(request.getUserCode()).userPassword(passwordEncoder.encode(request.getPassword())).role(request.getRole().toUpperCase()).build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
