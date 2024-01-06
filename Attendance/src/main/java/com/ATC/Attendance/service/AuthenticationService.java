@@ -13,7 +13,6 @@ import com.ATC.Attendance.entities.UserEntity;
 import com.ATC.Attendance.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 
 @Service    
 @RequiredArgsConstructor

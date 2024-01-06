@@ -1,9 +1,6 @@
 package com.ATC.Attendance.controller;
 
-import com.ATC.Attendance.dto.ActiveSessionReq;
-import com.ATC.Attendance.dto.ActiveSessionRes;
-import com.ATC.Attendance.dto.TeachingReq;
-import com.ATC.Attendance.dto.TeachingRes;
+import com.ATC.Attendance.dto.*;
 import com.ATC.Attendance.entities.SessionEntity;
 import com.ATC.Attendance.service.SessionService;
 import org.springframework.http.HttpStatus;
@@ -22,12 +19,18 @@ public class SessionController {
     }
 
     @PostMapping(path = "/activate")
-    public ResponseEntity<ActiveSessionRes> activeSession(@RequestHeader("Authorization") String jwtToken, @RequestBody ActiveSessionReq sessionRequest){
-        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(jwtToken, sessionRequest));
+    public ResponseEntity<ActiveSessionRes> activeSession(@RequestBody ActiveSessionReq sessionRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(sessionRequest));
     }
 
     @GetMapping(path = "/teaching")
-    public ResponseEntity<List<TeachingRes>> getSessionByTeacher(@RequestHeader("Authorization") String jwtToken, @RequestBody TeachingReq teaching){
-        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher(jwtToken, teaching));
+    public ResponseEntity<List<TeachingRes>> getSessionByTeacher(@RequestBody TeachingReq teaching){
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher(teaching));
+    }
+
+    @GetMapping("/absent-registered-students")
+    public List<AbsentRes> getAbsentRegisteredStudents(@RequestBody AbsentReq absentReq) {
+        System.out.println(absentReq.getSubjectCode());
+        return sessionService.getAbsentRegisteredStudents(absentReq);
     }
 }

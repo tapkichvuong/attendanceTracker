@@ -1,8 +1,7 @@
 package com.ATC.Attendance.service;
 
 import com.ATC.Attendance.dto.SessionResponse;
-import com.ATC.Attendance.entities.SessionEntity;
-import com.ATC.Attendance.respository.SessionRepository;
+import com.ATC.Attendance.repository.SessionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
