@@ -8,11 +8,13 @@ import com.ATC.Attendance.exception.AppException;
 import com.ATC.Attendance.repository.SessionRepository;
 import com.ATC.Attendance.repository.StudentRepository;
 import com.ATC.Attendance.repository.TeacherRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService {
@@ -56,19 +58,19 @@ public class SessionService {
                 .Id(session.getId())
                 .timeStart(session.getTimeStart())
                 .timeEnd(session.getTimeEnd())
-                .lesson(session.getLesson())
-                .teacher(session.getTeacher())
+                .lesson(session.getLesson().getLessonName())
+                .subjectName(session.getLesson().getSubject().getSubjectName())
                 .build();
-
     }
 
-    public List<TeachingRes> findSessionsByTeacher(TeachingReq teaching) {
-        TeacherEntity lecturer = teacherRepository.findByTeacherCode(teaching.getTeacherCode());
+    public List<TeachingRes> findSessionsByTeacher() {
+        String teacherCode = SecurityContextHolder.getContext().getAuthentication().getName();
+        TeacherEntity lecturer = teacherRepository.findByTeacherCode(teacherCode);
         if (lecturer == null) {
             throw new AppException(404, "Teacher not exist");
         }
         try {
-            List<SessionEntity> sessionEntityList = sessionRepository.findByTeacher_TeacherCode(teaching.getTeacherCode());
+            List<SessionEntity> sessionEntityList = sessionRepository.findByTeacher_TeacherCode(teacherCode);
             return sessionEntityList.stream().map(this::mapToTeachingResponse).toList();
 
         } catch (Exception e) {
@@ -115,15 +117,24 @@ public class SessionService {
 //            ('S001', 4),
 //            ('S004', 3),
 //            ('S002', 4);
-    public List<AbsentRes> getAbsentRegisteredStudents(AbsentReq absentReq) {
-        List<AbsentRes> result = new ArrayList<>();
-        System.out.println(absentReq.getSubjectCode());
-        List<SessionEntity> sessionEntities = sessionRepository.findSessionOfSubject(absentReq.getSubjectCode());
-        for(SessionEntity e: sessionEntities){
-            List<StudentEntity> studentEntities = studentRepository.findStudentsNotAttendedSessionAndRegistered(e.getId());
-            AbsentRes absentRes = new AbsentRes(e.getId(), e.getTimeStart(), studentEntities);
-            result.add(absentRes);
-        }
-        return result;
+    public AbsentRes getAbsentRegisteredStudents(AbsentReq absentReq) {
+        List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(absentReq.getSessionId());
+        List<String> studentCodes = studentEntities.stream()
+                .map(StudentEntity::getStudentCode)
+                .collect(Collectors.toList());
+        return AbsentRes.builder().studentCode(studentCodes).build();
+    }
+
+    public TotalStudentRes findStudentInCourse(TotalStudentReq totalStudentReq){
+        int count;
+        List<StudentEntity> studentEntities = studentRepository.findStudentInCourse(totalStudentReq.getSessionId());
+        count = studentEntities.size();
+        List<String> studentCodes = studentEntities.stream()
+                .map(StudentEntity::getStudentCode)
+                .collect(Collectors.toList());
+        return TotalStudentRes.builder()
+                .countTotalStudent(count)
+                .studentCode(studentCodes)
+                .build();
     }
 }

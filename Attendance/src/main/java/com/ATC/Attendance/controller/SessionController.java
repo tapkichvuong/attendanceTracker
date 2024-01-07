@@ -24,13 +24,19 @@ public class SessionController {
     }
 
     @GetMapping(path = "/teaching")
-    public ResponseEntity<List<TeachingRes>> getSessionByTeacher(@RequestBody TeachingReq teaching){
-        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher(teaching));
+    public ResponseEntity<List<TeachingRes>> getSessionByTeacher(){
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher());
     }
 
     @GetMapping("/absent-registered-students")
-    public List<AbsentRes> getAbsentRegisteredStudents(@RequestBody AbsentReq absentReq) {
-        System.out.println(absentReq.getSubjectCode());
+    public AbsentRes getAbsentRegisteredStudents(@RequestBody AbsentReq absentReq) {
+        System.out.println(absentReq.getSessionId());
         return sessionService.getAbsentRegisteredStudents(absentReq);
+    }
+
+    @GetMapping("/total-students")
+    public TotalStudentRes getTotalOfStudent(@RequestBody TotalStudentReq absentReq) {
+        System.out.println(absentReq.getSessionId());
+        return sessionService.findStudentInCourse(absentReq);
     }
 }

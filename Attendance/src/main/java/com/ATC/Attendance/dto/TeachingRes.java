@@ -22,6 +22,6 @@ public class TeachingRes {
     private LocalDateTime timeStart;
     private LocalDateTime timeEnd;
     private boolean isActive;
-    private LessonEntity lesson;
-    private TeacherEntity teacher;
+    private String lesson;
+    private String subjectName;
 }
