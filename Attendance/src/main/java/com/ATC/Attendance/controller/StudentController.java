@@ -1,6 +1,7 @@
 package com.ATC.Attendance.controller;
 
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +16,13 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.ATC.Attendance.dto.*;
+import com.ATC.Attendance.service.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -32,7 +39,12 @@ public class StudentController {
         if(role.contains("STUDENT")){
             return ResponseEntity.status(HttpStatus.OK).body(studentService.joinSession(SessionId,studentCode,file));
         }
-        throw new IllegalStateException("Only students can join sessions");
+        throw new IllegalStateException("Only students can join sessions");}
     
-}
+    @GetMapping(path = "/sessions")
+    public ResponseEntity<List<SessionResponse>> getSessions(){
+        List<SessionResponse> response = this.studentService.getSessions();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }
