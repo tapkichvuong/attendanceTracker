@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DemoController {
     @GetMapping
     public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication().getName());
+        return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
     }
     
 }
