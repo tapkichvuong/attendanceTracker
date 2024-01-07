@@ -65,7 +65,8 @@ public class StudentService {
         List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
         List<SessionResponse> results = new ArrayList<>();
         for (SessionEntity s: sessions) {
-            SessionResponse sessionResponse = new SessionResponse(s.getSId(), s.getTimeEnd(), s.getTimeStart(), s.isActive());
+            SessionResponse sessionResponse = new SessionResponse(s.getSId(),
+                    s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
             results.add(sessionResponse);
         }
         return results;
