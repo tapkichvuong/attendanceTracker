@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LoginResponse {
-    private String token;
-    private Boolean role;
+public class StudentRequest {
+    private String userCode;
+    private Long sessionId;
+    private String studentImageUrl;
 }

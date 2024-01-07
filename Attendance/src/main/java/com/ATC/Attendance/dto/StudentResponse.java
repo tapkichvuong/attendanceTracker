@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LoginRequest {
-    private String userCode;
-    private String password;
+public class StudentResponse {
+    private boolean isValidStudent;
 }
