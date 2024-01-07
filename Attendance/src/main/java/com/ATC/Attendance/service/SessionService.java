@@ -53,7 +53,7 @@ public class SessionService {
 
     private TeachingRes mapToTeachingResponse(SessionEntity session) {
         return TeachingRes.builder()
-                .Id(session.getId())
+                .Id(session.getSId())
                 .timeStart(session.getTimeStart())
                 .timeEnd(session.getTimeEnd())
                 .lesson(session.getLesson())
@@ -120,8 +120,8 @@ public class SessionService {
         System.out.println(absentReq.getSubjectCode());
         List<SessionEntity> sessionEntities = sessionRepository.findSessionOfSubject(absentReq.getSubjectCode());
         for(SessionEntity e: sessionEntities){
-            List<StudentEntity> studentEntities = studentRepository.findStudentsNotAttendedSessionAndRegistered(e.getId());
-            AbsentRes absentRes = new AbsentRes(e.getId(), e.getTimeStart(), studentEntities);
+            List<StudentEntity> studentEntities = studentRepository.findStudentsNotAttendedSessionAndRegistered(e.getSId());
+            AbsentRes absentRes = new AbsentRes(e.getSId(), e.getTimeStart(), studentEntities);
             result.add(absentRes);
         }
         return result;

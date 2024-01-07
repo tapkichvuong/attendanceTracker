@@ -3,12 +3,13 @@ package com.ATC.Attendance.service;
 import com.ATC.Attendance.dto.SessionResponse;
 import com.ATC.Attendance.entities.LessonEntity;
 import com.ATC.Attendance.entities.StudentEntity;
+import com.ATC.Attendance.entities.SubjectEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ATC.Attendance.entities.AttendanceEntity;
 import com.ATC.Attendance.entities.SessionEntity;
-import com.ATC.Attendance.entities.StudentEntity;
 import com.ATC.Attendance.repository.AttendanceRepository;
 import com.ATC.Attendance.repository.SessionRepository;
 import com.ATC.Attendance.repository.StudentRepository;
@@ -64,7 +65,7 @@ public class StudentService {
         List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
         List<SessionResponse> results = new ArrayList<>();
         for (SessionEntity s: sessions) {
-            SessionResponse sessionResponse = new SessionResponse(s.getId(), s.getTimeEnd(), s.getTimeStart(), s.isActive());
+            SessionResponse sessionResponse = new SessionResponse(s.getSId(), s.getTimeEnd(), s.getTimeStart(), s.isActive());
             results.add(sessionResponse);
         }
         return results;
