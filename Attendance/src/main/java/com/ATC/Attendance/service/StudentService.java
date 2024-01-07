@@ -52,7 +52,6 @@ public class StudentService {
             return false;
         }
     }
-    
 
     public List<SessionResponse> getSessions(String studentCode) {
         Optional<StudentEntity> student = studentRepository.findById(studentCode);

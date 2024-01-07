@@ -20,4 +20,5 @@ public class SessionResponse {
     private boolean isActive;
     private String lessonName;
     private String subjectName;
+
 }
