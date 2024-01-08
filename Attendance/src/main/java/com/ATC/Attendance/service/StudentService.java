@@ -4,6 +4,7 @@ package com.ATC.Attendance.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ATC.Attendance.dto.SessionResponse;
 import com.ATC.Attendance.entities.AttendanceEntity;
 import com.ATC.Attendance.entities.SessionEntity;
 import com.ATC.Attendance.entities.StudentEntity;
