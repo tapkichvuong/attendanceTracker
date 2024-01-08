@@ -5,13 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AbsentRes {
-    private List<String> studentCode;
+public class TotalStudentReq {
+    private Long sessionId;
 }

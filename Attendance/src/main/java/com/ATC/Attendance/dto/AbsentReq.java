@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AbsentReq {
-    private String subjectCode;
+    private Long sessionId;
 
 }

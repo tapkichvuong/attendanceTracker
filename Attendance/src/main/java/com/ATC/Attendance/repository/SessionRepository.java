@@ -2,9 +2,7 @@ package com.ATC.Attendance.repository;
 
 import com.ATC.Attendance.entities.LessonEntity;
 import com.ATC.Attendance.entities.SessionEntity;
-import com.ATC.Attendance.entities.StudentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
@@ -24,5 +22,6 @@ public interface SessionRepository extends JpaRepository<SessionEntity, Long> {
     nativeQuery = true)
     List<SessionEntity> findSessionOfSubject(String subjectCode);
     List<SessionEntity> findByTeacher_TeacherCode(String teacherCode);
+    List<SessionEntity> findByIsActiveIsTrueAndTimeEndGreaterThan(LocalDateTime timeEnd);
 
 }
