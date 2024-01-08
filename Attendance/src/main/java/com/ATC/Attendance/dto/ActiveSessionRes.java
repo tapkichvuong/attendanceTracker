@@ -1,4 +1,4 @@
-package com.ATC.Attendance.execption;
+package com.ATC.Attendance.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,9 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class AppException extends RuntimeException{
+@NoArgsConstructor
+@Builder
+public class ActiveSessionRes {
+    private Long status;
     private String message;
 }
