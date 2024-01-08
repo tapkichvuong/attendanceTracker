@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TotalStudentRes {
-    private int countTotalStudent;
+public class AbsentResponse {
     private List<String> studentCode;
 }

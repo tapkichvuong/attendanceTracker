@@ -58,17 +58,19 @@ public class StudentService {
         Optional<StudentEntity> student = studentRepository.findById(studentCode);
         if (student.isPresent()) {
             List<SubjectEntity> subjects = student.get().getSubjects();
+            System.out.println("subject size: " + subjects.size());
             List<LessonEntity> lessons = new ArrayList<>();
             for (SubjectEntity subject : subjects) {
                 lessons.addAll(subject.getLessons());
             }
 
             List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
-
+            System.out.println("session size: " + sessions.size());
             for (SessionEntity s : sessions) {
                 SessionResponse sessionResponse = new SessionResponse(s.getSId(),
                         s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
                 results.add(sessionResponse);
+                System.out.println("session size: " + sessions.size());
             }
         }
         return results;

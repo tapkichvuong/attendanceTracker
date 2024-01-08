@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActiveSessionRes {
+public class ActiveSessionResponse {
     private Long status;
     private String message;
 }

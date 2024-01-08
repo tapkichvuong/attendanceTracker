@@ -33,7 +33,7 @@ public class SessionService {
 //    INSERT INTO teacher (teacher_code, teacher_name) VALUES ('12345', 'Nguyen Van A');
 //    INSERT INTO session (is_active, sid, lesson_id, time_end, time_start, teacher_code)
 //                  VALUES (false, 1, 1, '2024-01-01 10:00:00', '2024-01-01 09:00:00', '12345');
-    public ActiveSessionRes activeSession(ActiveSessionReq sessionRequest) {
+    public ActiveSessionResponse activeSession(ActiveSessionRequest sessionRequest) {
         try {
 
             // Find the session by ID
@@ -49,20 +49,20 @@ public class SessionService {
             // Handle JWT validation exception
             throw new RuntimeException("Error: " + e.getMessage());
         }
-        return new ActiveSessionRes(1L, "The session is active");
+        return new ActiveSessionResponse(1L, "The session is active");
     }
 
-    private TeachingRes mapToTeachingResponse(SessionEntity session) {
-        return TeachingRes.builder()
+    private TeachingResponse mapToTeachingResponse(SessionEntity session) {
+        return TeachingResponse.builder()
                 .Id(session.getSId())
                 .timeStart(session.getTimeStart())
                 .timeEnd(session.getTimeEnd())
-                .lesson(session.getLesson().getLessonName())
+                .lessonName(session.getLesson().getLessonName())
                 .subjectName(session.getLesson().getSubject().getSubjectName())
                 .build();
     }
 
-    public List<TeachingRes> findSessionsByTeacher() {
+    public List<TeachingResponse> findSessionsByTeacher() {
         String teacherCode = SecurityContextHolder.getContext().getAuthentication().getName();
         TeacherEntity lecturer = teacherRepository.findByTeacherCode(teacherCode);
         if (lecturer == null) {
@@ -129,22 +129,22 @@ public class SessionService {
 //            ('S004', 3),
 //            ('S002', 4);
 
-    public AbsentRes getAbsentRegisteredStudents(AbsentReq absentReq) {
-        List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(absentReq.getSessionId());
+    public AbsentResponse getAbsentRegisteredStudents(AbsentRequest absentRequest) {
+        List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(absentRequest.getSessionId());
         List<String> studentCodes = studentEntities.stream()
                 .map(StudentEntity::getStudentCode)
                 .collect(Collectors.toList());
-        return AbsentRes.builder().studentCode(studentCodes).build();
+        return AbsentResponse.builder().studentCode(studentCodes).build();
     }
 
-    public TotalStudentRes findStudentInCourse(TotalStudentReq totalStudentReq){
+    public TotalStudentResponse findStudentInCourse(TotalStudentRequest totalStudentRequest){
         int count;
-        List<StudentEntity> studentEntities = studentRepository.findStudentInCourse(totalStudentReq.getSessionId());
+        List<StudentEntity> studentEntities = studentRepository.findStudentInCourse(totalStudentRequest.getSessionId());
         count = studentEntities.size();
         List<String> studentCodes = studentEntities.stream()
                 .map(StudentEntity::getStudentCode)
                 .collect(Collectors.toList());
-        return TotalStudentRes.builder()
+        return TotalStudentResponse.builder()
                 .countTotalStudent(count)
                 .studentCode(studentCodes)
                 .build();
