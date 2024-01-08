@@ -3,6 +3,7 @@ package com.ATC.Attendance.repository;
 import com.ATC.Attendance.entities.LessonEntity;
 import com.ATC.Attendance.entities.SessionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
