@@ -27,9 +27,9 @@ public class SessionEntity {
     private Long SId;
     @Column(nullable = false, unique = true)
     private LocalDateTime timeStart;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDateTime timeEnd;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private boolean isActive;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(

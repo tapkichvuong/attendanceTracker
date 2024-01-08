@@ -11,6 +11,9 @@ import com.ATC.Attendance.repository.AttendanceRepository;
 import com.ATC.Attendance.repository.SessionRepository;
 import com.ATC.Attendance.repository.StudentRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
@@ -44,4 +47,15 @@ public class StudentService {
         }
     }
     
+
+    public List<SessionResponse> getSessions() {
+        return sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThan(LocalDateTime.now()).stream()
+                .map(e -> SessionResponse.builder()
+                        .Id(e.getId())
+                        .timeEnd(e.getTimeEnd())
+                        .timeStart(e.getTimeStart())
+                        .isActive(e.isActive())
+                        .build())
+                .toList();
+    }
 }
