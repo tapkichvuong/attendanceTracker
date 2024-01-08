@@ -54,19 +54,22 @@ public class StudentService {
     }
 
     public List<SessionResponse> getSessions(String studentCode) {
-        Optional<StudentEntity> student = studentRepository.findById(studentCode);
-        List<SubjectEntity> subjects = student.get().getSubjects();
-        List<LessonEntity> lessons = new ArrayList<>();
-        for (SubjectEntity subject : subjects) {
-            lessons.addAll(subject.getLessons());
-        }
-
-        List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
         List<SessionResponse> results = new ArrayList<>();
-        for (SessionEntity s: sessions) {
-            SessionResponse sessionResponse = new SessionResponse(s.getSId(),
-                    s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
-            results.add(sessionResponse);
+        Optional<StudentEntity> student = studentRepository.findById(studentCode);
+        if (student.isPresent()) {
+            List<SubjectEntity> subjects = student.get().getSubjects();
+            List<LessonEntity> lessons = new ArrayList<>();
+            for (SubjectEntity subject : subjects) {
+                lessons.addAll(subject.getLessons());
+            }
+
+            List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
+
+            for (SessionEntity s : sessions) {
+                SessionResponse sessionResponse = new SessionResponse(s.getSId(),
+                        s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
+                results.add(sessionResponse);
+            }
         }
         return results;
 
