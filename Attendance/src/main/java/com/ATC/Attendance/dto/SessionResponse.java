@@ -18,4 +18,7 @@ public class SessionResponse {
     private LocalDateTime timeStart;
     private LocalDateTime timeEnd;
     private boolean isActive;
+    private String lessonName;
+    private String subjectName;
+
 }

@@ -128,6 +128,7 @@ public class SessionService {
 //            ('S001', 4),
 //            ('S004', 3),
 //            ('S002', 4);
+
     public AbsentRes getAbsentRegisteredStudents(AbsentReq absentReq) {
         List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(absentReq.getSessionId());
         List<String> studentCodes = studentEntities.stream()
