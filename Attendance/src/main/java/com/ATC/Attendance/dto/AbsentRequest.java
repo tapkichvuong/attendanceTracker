@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ActiveSessionReq {
-    private Long id;
+public class AbsentRequest {
+    private Long sessionId;
+
 }

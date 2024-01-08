@@ -36,7 +36,7 @@ public class StudentController {
     private final StudentService studentService;
    
 
-    @PostMapping
+    @PostMapping("/join-session")
     public ResponseEntity<Boolean> joinSession(@RequestParam("sessionId") Long SessionId,@RequestParam("image") MultipartFile file) {
         String studentCode = SecurityContextHolder.getContext().getAuthentication().getName();
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
