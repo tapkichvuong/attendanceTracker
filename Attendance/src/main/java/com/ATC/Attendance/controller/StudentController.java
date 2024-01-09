@@ -54,6 +54,7 @@ public class StudentController {
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("studentCode", studentCode);
         body.add("image", encodedString);
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
