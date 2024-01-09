@@ -79,10 +79,10 @@ public class StudentController {
         throw new IllegalStateException("Only students can join sessions");}
     
     @GetMapping(path = "/sessions")
-    public ResponseEntity<List<SessionResponse>> getSessions(){
+    public ResponseEntity<List<SessionResponse>> getSessions(@RequestParam("longitude") Double longitude, @RequestParam("latitude") Double latitude){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserEntity user = (UserEntity) auth.getPrincipal();
-        List<SessionResponse> response = this.studentService.getSessions(user.getUserCode());
+        List<SessionResponse> response = this.studentService.getSessions(user.getUserCode(), longitude, latitude);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
