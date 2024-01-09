@@ -23,7 +23,5 @@ public class StudentEntity {
     @Column(nullable = false)
     private String studentImageUrl;
 
-    @ManyToMany(mappedBy = "students")
-    private List<SubjectEntity> subjects;
 
 }
