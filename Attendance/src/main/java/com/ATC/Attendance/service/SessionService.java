@@ -47,12 +47,11 @@ public class SessionService {
                 }
                 sessionRepository.save(session); // Update the session in the database
             });
-
+            return new ActiveSessionResponse(optionalSession.get().isActive(), "The status of session is successfully changed");
         } catch (Exception e) {
             // Handle JWT validation exception
             throw new RuntimeException("Error: " + e.getMessage());
         }
-        return new ActiveSessionResponse(true, "The session is active");
     }
 
     private TeachingResponse mapToTeachingResponse(SessionEntity session) {

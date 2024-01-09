@@ -79,9 +79,10 @@ public class StudentService {
             System.out.println("session size: " + sessions.size());
             for (SessionEntity s : sessions) {
                 Double distance = calculateEuclideanDistance(longitude, latitude, s.getLongitude(), s.getLatitude());
+                System.out.println(distance);
                 SessionResponse sessionResponse = new SessionResponse(s.getSId(),
                         s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
-                if(distance < 50){
+                if(distance < 0.0002){
                     results.add(sessionResponse);
                 }
                 System.out.println("session size: " + sessions.size());
