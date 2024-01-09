@@ -37,11 +37,14 @@ public class StudentService {
     }
 
     public boolean joinSession(Long sessionId, String studentCode, int isTrue) {
+        if(isTrue == 0){
+            return false;
+        }
         StudentEntity existStudent = studentRepository.findByStudentCode(studentCode);
         SessionEntity existSession = sessionRepository.findBySId(sessionId);
         if(existStudent!=null && existSession!=null){
             AttendanceEntity existAttendance = attendanceRepository.getCourseDetailByClassCodeAndCourseCode(studentCode, sessionId);
-            if(existAttendance!=null && isTrue == 1){
+            if(existAttendance!=null){
                 return true;
             }
             else{

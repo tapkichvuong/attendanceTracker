@@ -41,7 +41,11 @@ public class SessionService {
 
             // If the session exists, activate it by setting isActive to true
             optionalSession.ifPresent(session -> {
-                session.setActive(true);
+                if(session.isActive()){
+                    session.setActive(false);
+                }else{
+                    session.setActive(true);
+                }
                 sessionRepository.save(session); // Update the session in the database
             });
 
@@ -97,13 +101,13 @@ public class SessionService {
     //CREATE TABLE RegSubject (
 //    subjectCode VARCHAR(255) NOT NULL,
 //    studentCode VARCHAR(255) NOT NULL,
-//    PRIMARY KEY (subjectCode, studentCode),
+//    PRIMARY KEY (subject_Code, student_Code),
 //    CONSTRAINT fk_regsubject_subject
-//        FOREIGN KEY (subjectCode)
+//        FOREIGN KEY (subject_Code)
 //        REFERENCES Subject(subjectCode),
 //    CONSTRAINT fk_regsubject_student
-//        FOREIGN KEY (studentCode)
-//        REFERENCES Student(studentCode)
+//        FOREIGN KEY (student_Code)
+//        REFERENCES Student(student_Code)
 //);
 
 //      INSERT INTO regSubject (student_code, subject_code)

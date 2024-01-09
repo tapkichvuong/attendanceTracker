@@ -1,7 +1,9 @@
 package com.ATC.Attendance.controller;
 
 
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -34,7 +36,7 @@ public class StudentController {
     HttpHeaders headers = new HttpHeaders();
 
     @PostMapping("/join-session")
-    public ResponseEntity<Boolean> joinSession(@RequestBody JoinSessionRequest joinSessionRequest) {
+    public ResponseEntity<Boolean> joinSession(@RequestBody JoinSessionRequest joinSessionRequest) throws JsonProcessingException {
         String studentCode = SecurityContextHolder.getContext().getAuthentication().getName();
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         
@@ -45,13 +47,13 @@ public class StudentController {
         // body.add("file", file.getResource());
 
         // HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        byte[] originalBytes = joinSessionRequest.getStudentImageUrl().getBytes(StandardCharsets.UTF_8);
-        String encodedString = Base64.getEncoder().encodeToString(originalBytes);
+
+        String encodedString = joinSessionRequest.getStudentImageUrl();
 
         // Prepare the request
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("studentCode", studentCode);
@@ -62,8 +64,13 @@ public class StudentController {
         ResponseEntity<String> response = restTemplate.exchange(
             "http://localhost:5000/join", HttpMethod.POST, requestEntity, String.class);
 
-        System.out.println("Response code: " + response.getStatusCode());   
-        int intValue = Integer.parseInt(response.getBody().trim());
+        System.out.println("Response code: " + response.getStatusCode());
+        String jsonString = response.getBody().trim();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+        int intValue = jsonNode.get("result").asInt();
+//        int intValue = Integer.parseInt(response.getBody().trim());
     
         if(role.contains("STUDENT")){
 
