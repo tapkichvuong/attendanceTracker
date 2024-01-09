@@ -40,4 +40,8 @@ public class TeacherController {
         System.out.println(absentReq.getSessionId());
         return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
     }
+    @GetMapping(path = "/check-active-session")
+    public ResponseEntity<ActiveSessionResponse> getStatusOfSession(@RequestBody ActiveSessionRequest activeSessionRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.getStatusActive(activeSessionRequest));
+    }
 }
