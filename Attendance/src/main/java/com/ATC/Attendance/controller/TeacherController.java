@@ -31,6 +31,7 @@ public class TeacherController {
     @GetMapping(path = "/absent-registered-students")
     public ResponseEntity<AbsentResponse> getAbsentRegisteredStudents(@RequestParam("sessionId") Long sessionId) {
 
+
         // System.out.println(absentRequest.getSessionId());
         return ResponseEntity.status(HttpStatus.OK).body(sessionService.getAbsentRegisteredStudents(sessionId));
     }
@@ -40,5 +41,10 @@ public class TeacherController {
         // System.out.println(absentReq.getSessionId());
         // return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
         return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(sessionId));
+
+    }
+    @GetMapping(path = "/check-active-session")
+    public ResponseEntity<ActiveSessionResponse> getStatusOfSession(@RequestBody ActiveSessionRequest activeSessionRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.getStatusActive(activeSessionRequest));
     }
 }
