@@ -34,7 +34,7 @@ public class StudentController {
     HttpHeaders headers = new HttpHeaders();
 
     @PostMapping("/join-session")
-    public ResponseEntity<Boolean> joinSession(@RequestParam("sessionId") Long SessionId,@RequestParam("image") String fileContent) {
+    public ResponseEntity<Boolean> joinSession(@RequestBody JoinSessionRequest joinSessionRequest) {
         String studentCode = SecurityContextHolder.getContext().getAuthentication().getName();
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         
@@ -45,7 +45,7 @@ public class StudentController {
         // body.add("file", file.getResource());
 
         // HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        byte[] originalBytes = fileContent.getBytes(StandardCharsets.UTF_8);
+        byte[] originalBytes = joinSessionRequest.getStudentImageUrl().getBytes(StandardCharsets.UTF_8);
         String encodedString = Base64.getEncoder().encodeToString(originalBytes);
 
         // Prepare the request
@@ -66,7 +66,7 @@ public class StudentController {
     
         if(role.contains("STUDENT")){
 
-            return ResponseEntity.status(HttpStatus.OK).body(studentService.joinSession(SessionId,studentCode,intValue));
+            return ResponseEntity.status(HttpStatus.OK).body(studentService.joinSession(joinSessionRequest.getSessionId(),studentCode,intValue));
         }
         throw new IllegalStateException("Only students can join sessions");}
     
