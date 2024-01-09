@@ -28,14 +28,14 @@ public class TeacherController {
     }
 
     @GetMapping("/absent-registered-students")
-    public AbsentResponse getAbsentRegisteredStudents(@RequestBody AbsentRequest absentRequest) {
+    public ResponseEntity<AbsentResponse> getAbsentRegisteredStudents(@RequestBody AbsentRequest absentRequest) {
         System.out.println(absentRequest.getSessionId());
-        return sessionService.getAbsentRegisteredStudents(absentRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.getAbsentRegisteredStudents(absentRequest));
     }
 
     @GetMapping("/total-students")
-    public TotalStudentResponse getTotalOfStudent(@RequestBody TotalStudentRequest absentReq) {
+    public ResponseEntity<TotalStudentResponse> getTotalOfStudent(@RequestBody TotalStudentRequest absentReq) {
         System.out.println(absentReq.getSessionId());
-        return sessionService.findStudentInCourse(absentReq);
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
     }
 }
