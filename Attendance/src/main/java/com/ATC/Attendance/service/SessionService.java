@@ -49,7 +49,7 @@ public class SessionService {
             // Handle JWT validation exception
             throw new RuntimeException("Error: " + e.getMessage());
         }
-        return new ActiveSessionResponse(1L, "The session is active");
+        return new ActiveSessionResponse(true, "The session is active");
     }
 
     private TeachingResponse mapToTeachingResponse(SessionEntity session) {
@@ -148,5 +148,13 @@ public class SessionService {
                 .countTotalStudent(count)
                 .studentCode(studentCodes)
                 .build();
+    }
+
+    public ActiveSessionResponse getStatusActive(ActiveSessionRequest activeSessionRequest){
+        SessionEntity session = sessionRepository.findBySId(activeSessionRequest.getId());
+        if(session.isActive()) {
+            return ActiveSessionResponse.builder().status(session.isActive()).message("This session is activated").build();
+        }
+        return ActiveSessionResponse.builder().status(session.isActive()).message("This session is unactivated").build();
     }
 }

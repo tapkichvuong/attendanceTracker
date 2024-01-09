@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ActiveSessionResponse {
-    private Long status;
+    private Boolean status;
     private String message;
 }
