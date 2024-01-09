@@ -150,8 +150,8 @@ public class SessionService {
                 .build();
     }
 
-    public ActiveSessionResponse getStatusActive(ActiveSessionRequest activeSessionRequest){
-        SessionEntity session = sessionRepository.findBySId(activeSessionRequest.getId());
+    public ActiveSessionResponse getStatusActive(Long sessionId){
+        SessionEntity session = sessionRepository.findBySId(sessionId);
         if(session.isActive()) {
             return ActiveSessionResponse.builder().status(session.isActive()).message("This session is activated").build();
         }
