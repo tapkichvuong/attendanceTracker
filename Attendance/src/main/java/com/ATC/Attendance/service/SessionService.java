@@ -94,7 +94,7 @@ public class SessionService {
 //            (false, 3, 1, '2024-01-03 10:00:00', '2024-01-03 09:00:00', '12345'),
 //            (false, 4, 1, '2024-01-04 10:00:00', '2024-01-04 09:00:00', '12345');
 //
-//CREATE TABLE RegSubject (
+    //CREATE TABLE RegSubject (
 //    subjectCode VARCHAR(255) NOT NULL,
 //    studentCode VARCHAR(255) NOT NULL,
 //    PRIMARY KEY (subjectCode, studentCode),
