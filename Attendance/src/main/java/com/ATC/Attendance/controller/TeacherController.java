@@ -27,14 +27,16 @@ public class TeacherController {
         return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.findSessionsByTeacher());
     }
 
-    @GetMapping("/absent-registered-students")
-    public ResponseEntity<AbsentResponse> getAbsentRegisteredStudents(@RequestBody AbsentRequest absentRequest) {
+
+    @GetMapping(path = "/absent-registered-students")
+    public AbsentResponse getAbsentRegisteredStudents(@RequestBody AbsentRequest absentRequest) {
+
         System.out.println(absentRequest.getSessionId());
         return ResponseEntity.status(HttpStatus.OK).body(sessionService.getAbsentRegisteredStudents(absentRequest));
     }
 
-    @GetMapping("/total-students")
-    public ResponseEntity<TotalStudentResponse> getTotalOfStudent(@RequestBody TotalStudentRequest absentReq) {
+    @GetMapping(path = "/total-students")
+    public TotalStudentResponse getTotalOfStudent(@RequestBody TotalStudentRequest absentReq) {
         System.out.println(absentReq.getSessionId());
         return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
     }
