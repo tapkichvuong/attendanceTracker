@@ -37,11 +37,14 @@ public class StudentService {
     }
 
     public boolean joinSession(Long sessionId, String studentCode, int isTrue) {
+        if(isTrue == 0){
+            return false;
+        }
         StudentEntity existStudent = studentRepository.findByStudentCode(studentCode);
         SessionEntity existSession = sessionRepository.findBySId(sessionId);
         if(existStudent!=null && existSession!=null){
             AttendanceEntity existAttendance = attendanceRepository.getCourseDetailByClassCodeAndCourseCode(studentCode, sessionId);
-            if(existAttendance!=null && isTrue == 1){
+            if(existAttendance!=null){
                 return true;
             }
             else{
@@ -57,7 +60,11 @@ public class StudentService {
         }
     }
 
-    public List<SessionResponse> getSessions(String studentCode) {
+    public static double calculateEuclideanDistance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    public List<SessionResponse> getSessions(String studentCode, Double longitude, Double latitude) {
         List<SessionResponse> results = new ArrayList<>();
         Optional<StudentEntity> student = studentRepository.findById(studentCode);
         if (student.isPresent()) {
@@ -71,9 +78,13 @@ public class StudentService {
             List<SessionEntity> sessions = sessionRepository.findByIsActiveIsTrueAndTimeEndGreaterThanAndLessonIn(LocalDateTime.now(), lessons);
             System.out.println("session size: " + sessions.size());
             for (SessionEntity s : sessions) {
+                Double distance = calculateEuclideanDistance(longitude, latitude, s.getLongitude(), s.getLatitude());
+                System.out.println(distance);
                 SessionResponse sessionResponse = new SessionResponse(s.getSId(),
                         s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
-                results.add(sessionResponse);
+                if(distance < 0.0002){
+                    results.add(sessionResponse);
+                }
                 System.out.println("session size: " + sessions.size());
             }
         }

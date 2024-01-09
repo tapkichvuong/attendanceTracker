@@ -18,7 +18,7 @@ public interface AttendanceRepository extends JpaRepository<AttendanceEntity, Lo
             value = """
                     select T1.*
                     from Attendances_table as T1
-                    where T1.studentCode = ?1 and T1.sessionId = ?2
+                    where T1.student_code = ?1 and T1.session_id = ?2
                     """
     )
     AttendanceEntity getCourseDetailByClassCodeAndCourseCode(String studentCode, Long sessionId);

@@ -45,4 +45,9 @@ public class SessionEntity {
     )
     private TeacherEntity teacher;
 
+    @Column(nullable = false)
+    private double longitude;
+
+    @Column(nullable = false)
+    private double latitude;
 }
