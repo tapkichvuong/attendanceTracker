@@ -36,12 +36,12 @@ public class StudentService {
         this.subjectRepository = subjectRepository;
     }
 
-    public boolean joinSession(Long sessionId, String studentCode, MultipartFile file) {
+    public boolean joinSession(Long sessionId, String studentCode, int isTrue) {
         StudentEntity existStudent = studentRepository.findByStudentCode(studentCode);
         SessionEntity existSession = sessionRepository.findBySId(sessionId);
         if(existStudent!=null && existSession!=null){
             AttendanceEntity existAttendance = attendanceRepository.getCourseDetailByClassCodeAndCourseCode(studentCode, sessionId);
-            if(existAttendance!=null){
+            if(existAttendance!=null && isTrue == 1){
                 return true;
             }
             else{
