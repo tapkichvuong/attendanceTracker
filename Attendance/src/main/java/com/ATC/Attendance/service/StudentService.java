@@ -5,6 +5,7 @@ import com.ATC.Attendance.entities.LessonEntity;
 import com.ATC.Attendance.entities.StudentEntity;
 import com.ATC.Attendance.entities.SubjectEntity;
 
+import com.ATC.Attendance.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,11 +26,14 @@ public class StudentService {
     private final SessionRepository sessionRepository;
     private final AttendanceRepository attendanceRepository;
 
+    private final SubjectRepository subjectRepository;
 
-    public StudentService(StudentRepository studentRepository, SessionRepository sessionRepository, AttendanceRepository attendanceRepository) {
+
+    public StudentService(StudentRepository studentRepository, SessionRepository sessionRepository, AttendanceRepository attendanceRepository, SubjectRepository subjectRepository) {
         this.studentRepository = studentRepository;
         this.sessionRepository = sessionRepository;
         this.attendanceRepository = attendanceRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     public boolean joinSession(Long sessionId, String studentCode, int isTrue) {
@@ -57,7 +61,7 @@ public class StudentService {
         List<SessionResponse> results = new ArrayList<>();
         Optional<StudentEntity> student = studentRepository.findById(studentCode);
         if (student.isPresent()) {
-            List<SubjectEntity> subjects = student.get().getSubjects();
+            List<SubjectEntity> subjects = subjectRepository.findSubject(student.get().getStudentCode());
             System.out.println("subject size: " + subjects.size());
             List<LessonEntity> lessons = new ArrayList<>();
             for (SubjectEntity subject : subjects) {
