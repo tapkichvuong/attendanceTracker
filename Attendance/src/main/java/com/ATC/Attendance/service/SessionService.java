@@ -33,11 +33,11 @@ public class SessionService {
 //    INSERT INTO teacher (teacher_code, teacher_name) VALUES ('12345', 'Nguyen Van A');
 //    INSERT INTO session (is_active, sid, lesson_id, time_end, time_start, teacher_code)
 //                  VALUES (false, 1, 1, '2024-01-01 10:00:00', '2024-01-01 09:00:00', '12345');
-    public ActiveSessionResponse activeSession(ActiveSessionRequest sessionRequest) {
+    public ActiveSessionResponse activeSession(Long id) {
         try {
 
             // Find the session by ID
-            Optional<SessionEntity> optionalSession = sessionRepository.findById(sessionRequest.getId());
+            Optional<SessionEntity> optionalSession = sessionRepository.findById(id);
 
             // If the session exists, activate it by setting isActive to true
             optionalSession.ifPresent(session -> {
@@ -129,17 +129,17 @@ public class SessionService {
 //            ('S004', 3),
 //            ('S002', 4);
 
-    public AbsentResponse getAbsentRegisteredStudents(AbsentRequest absentRequest) {
-        List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(absentRequest.getSessionId());
+    public AbsentResponse getAbsentRegisteredStudents(Long sessionId) {
+        List<StudentEntity> studentEntities =  studentRepository.findStudentsNotAttendedSessionAndRegistered(sessionId);
         List<String> studentCodes = studentEntities.stream()
                 .map(StudentEntity::getStudentCode)
                 .collect(Collectors.toList());
         return AbsentResponse.builder().studentCode(studentCodes).build();
     }
 
-    public TotalStudentResponse findStudentInCourse(TotalStudentRequest totalStudentRequest){
+    public TotalStudentResponse findStudentInCourse(Long sessionId) {
         int count;
-        List<StudentEntity> studentEntities = studentRepository.findStudentInCourse(totalStudentRequest.getSessionId());
+        List<StudentEntity> studentEntities = studentRepository.findStudentInCourse(sessionId);
         count = studentEntities.size();
         List<String> studentCodes = studentEntities.stream()
                 .map(StudentEntity::getStudentCode)
