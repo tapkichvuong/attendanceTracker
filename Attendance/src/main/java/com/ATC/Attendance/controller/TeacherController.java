@@ -18,8 +18,8 @@ public class TeacherController {
     }
 
     @PostMapping(path = "/activate")
-    public ResponseEntity<ActiveSessionResponse> activeSession(@RequestBody ActiveSessionRequest sessionRequest){
-        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(sessionRequest));
+    public ResponseEntity<ActiveSessionResponse> activeSession(@RequestParam("id") Long id){
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessionService.activeSession(id));
     }
 
     @GetMapping(path = "/sessions")
@@ -29,16 +29,19 @@ public class TeacherController {
 
 
     @GetMapping(path = "/absent-registered-students")
-    public ResponseEntity<AbsentResponse> getAbsentRegisteredStudents(@RequestBody AbsentRequest absentRequest) {
+    public ResponseEntity<AbsentResponse> getAbsentRegisteredStudents(@RequestParam("sessionId") Long sessionId) {
 
-        System.out.println(absentRequest.getSessionId());
-        return ResponseEntity.status(HttpStatus.OK).body(sessionService.getAbsentRegisteredStudents(absentRequest));
+
+        // System.out.println(absentRequest.getSessionId());
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.getAbsentRegisteredStudents(sessionId));
     }
 
     @GetMapping(path = "/total-students")
-    public ResponseEntity<TotalStudentResponse> getTotalOfStudent(@RequestBody TotalStudentRequest absentReq) {
-        System.out.println(absentReq.getSessionId());
-        return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
+    public ResponseEntity<TotalStudentResponse> getTotalOfStudent(@RequestParam("sessionId") Long sessionId) {
+        // System.out.println(absentReq.getSessionId());
+        // return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(absentReq));
+        return ResponseEntity.status(HttpStatus.OK).body(sessionService.findStudentInCourse(sessionId));
+
     }
     @GetMapping(path = "/check-active-session")
     public ResponseEntity<ActiveSessionResponse> getStatusOfSession(@RequestBody ActiveSessionRequest activeSessionRequest){

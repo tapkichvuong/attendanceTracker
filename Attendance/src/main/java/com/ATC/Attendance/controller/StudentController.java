@@ -19,11 +19,10 @@ import com.ATC.Attendance.entities.UserEntity;
 import com.ATC.Attendance.service.StudentService;
 import org.apache.catalina.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.Base64;
 import java.util.List;
-
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("api/v1/student")
@@ -35,17 +34,29 @@ public class StudentController {
     HttpHeaders headers = new HttpHeaders();
 
     @PostMapping("/join-session")
-    public ResponseEntity<Boolean> joinSession(@RequestParam("sessionId") Long SessionId,@RequestParam("image") MultipartFile file) {
+    public ResponseEntity<Boolean> joinSession(@RequestParam("sessionId") Long SessionId,@RequestParam("image") String fileContent) {
         String studentCode = SecurityContextHolder.getContext().getAuthentication().getName();
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         
 
+        // headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        // MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        // body.add("file", file.getResource());
+
+        // HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        byte[] originalBytes = fileContent.getBytes(StandardCharsets.UTF_8);
+        String encodedString = Base64.getEncoder().encodeToString(originalBytes);
+
+        // Prepare the request
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", file.getResource());
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("image", encodedString);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
             "http://localhost:5000/join", HttpMethod.POST, requestEntity, String.class);
