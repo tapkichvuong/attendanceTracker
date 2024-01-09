@@ -4,6 +4,7 @@ import com.ATC.Attendance.entities.StudentEntity;
 
 import java.util.List;
 
+import com.ATC.Attendance.entities.SubjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,5 @@ public interface StudentRepository extends JpaRepository<StudentEntity, String>{
 			"JOIN regSubject rs ON s.student_code = rs.student_code " +
 			"WHERE rs.subject_Code = (SELECT l.subject_Code FROM Lesson l JOIN Session ses ON l.lid = ses.lesson_id WHERE ses.sid = ?1)", nativeQuery = true)
 	List<StudentEntity> findStudentInCourse(Long sessionId);
+
 }
