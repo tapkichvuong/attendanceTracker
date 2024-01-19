@@ -2,4 +2,8 @@
 
 ## DEMO
 
-[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
+
+
+https://github.com/tapkichvuong/attendanceTracker/assets/83149019/eff1b26a-7e2b-4f3b-8d3e-b8ebb8825511
+
+
