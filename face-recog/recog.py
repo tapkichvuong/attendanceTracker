@@ -13,6 +13,7 @@ CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = "static"
 
+count = 0
 
 @app.route('/join', methods=['POST'])
 def checkFace():
@@ -20,13 +21,12 @@ def checkFace():
     print(content)
     imgdata = content['image'][0]
     imgdata = base64.b64decode(imgdata)
-    img_file = open('unknown.jpeg', 'wb')
+    img_file = open('unknown.jpg', 'wb')
     img_file.write(imgdata)
     img_file.close()
     
     studentCode = content['studentCode'][0]
-    unknown_image = face_recognition.load_image_file("unknown.jpeg")
-
+    unknown_image = face_recognition.load_image_file("student.jpg")
     unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
     student_encoding = np.load(studentCode + '.npy')
     result = face_recognition.compare_faces([student_encoding], unknown_encoding)

@@ -65,6 +65,7 @@ public class StudentService {
     }
 
     public List<SessionResponse> getSessions(String studentCode, Double longitude, Double latitude) {
+        System.out.println(longitude + ", " +  latitude);
         List<SessionResponse> results = new ArrayList<>();
         Optional<StudentEntity> student = studentRepository.findById(studentCode);
         if (student.isPresent()) {
@@ -82,7 +83,7 @@ public class StudentService {
                 System.out.println(distance);
                 SessionResponse sessionResponse = new SessionResponse(s.getSId(),
                         s.getTimeEnd(), s.getTimeStart(), s.isActive(), s.getLesson().getLessonName(), s.getLesson().getSubject().getSubjectName());
-                if(distance < 0.0002){
+                if(distance < 200){
                     results.add(sessionResponse);
                 }
                 System.out.println("session size: " + sessions.size());

@@ -71,7 +71,7 @@ public class StudentController {
 
         int intValue = jsonNode.get("result").asInt();
 //        int intValue = Integer.parseInt(response.getBody().trim());
-    
+        System.out.println(intValue);
         if(role.contains("STUDENT")){
 
             return ResponseEntity.status(HttpStatus.OK).body(studentService.joinSession(joinSessionRequest.getSessionId(),studentCode,intValue));

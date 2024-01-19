@@ -117,6 +117,13 @@ public class SessionService {
 //            ('S004', 'CT202'),
 //            ('S005', 'CT202');
 //
+//          INSERT INTO regSubject (student_code, subject_code)
+//      VALUES
+//            ('S001', '1'),
+//            ('S002', '1'),
+//            ('S003', '1'),
+//            ('S004', '1'),
+//            ('S005', '1');
 //INSERT INTO Attendances_table(student_code, session_id)
 //    VALUES
 //            ('S001', 1),
